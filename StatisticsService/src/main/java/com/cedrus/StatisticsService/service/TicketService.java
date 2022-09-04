@@ -38,7 +38,7 @@ public class TicketService {
         return new TicketPriceResponse(cost);
     }
 
-    private BigDecimal calculateTicketPrice(LocalDateTime startTime, LocalDateTime endTime){
+    public BigDecimal calculateTicketPrice(LocalDateTime startTime, LocalDateTime endTime){
         long initHour = 1;
         long totalHours = ChronoUnit.HOURS.between(startTime, endTime);
         BigDecimal price = new BigDecimal(BigInteger.ZERO);

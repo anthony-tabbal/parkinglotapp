@@ -41,6 +41,17 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
         return response;
     }
 
+    @ExceptionHandler(CalculateCostException.class)
+    public Response<Object> handleTicketCalculateCostException(
+            NoDataFoundException ex, WebRequest request) {
+
+        Response response = new Response();
+        response.setStatus(HttpStatus.BAD_REQUEST.toString());
+        response.setMessage("Not  to calculate cost");
+
+        return response;
+    }
+
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(
             MethodArgumentNotValidException ex, HttpHeaders headers,

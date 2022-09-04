@@ -16,12 +16,12 @@ public class TicketingController {
     TicketService ticketService;
 
     @PostMapping(value = "/create-ticket")
-    public Response<CreatedTicketResponse> createTicket(@RequestBody CreateTicketRequest createTicketRequest){
-        return new Response<CreatedTicketResponse>("200", "success",ticketService.createTicket(createTicketRequest));
+    public Response<CreatedTicketResponse> createTicket(@RequestBody CreateTicketRequest createTicketRequest) {
+        return new Response<CreatedTicketResponse>("200", "success", ticketService.createTicket(createTicketRequest));
     }
 
     @PutMapping(value = "/pay-ticket/{ticketId}")
-    public Response<PayedTicketResponse> payTicket(@PathVariable String ticketId){
+    public Response<PayedTicketResponse> payTicket(@PathVariable String ticketId) {
         return new Response<PayedTicketResponse>("200", "success", ticketService.payTicket(ticketId));
     }
 }

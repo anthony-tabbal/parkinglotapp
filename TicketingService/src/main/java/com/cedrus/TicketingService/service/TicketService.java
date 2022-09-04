@@ -1,14 +1,15 @@
 package com.cedrus.TicketingService.service;
 
+import com.cedrus.TicketingService.exception.CalculateCostException;
 import com.cedrus.TicketingService.exception.NoDataFoundException;
 import com.cedrus.TicketingService.exception.TicketAlreadyUsedException;
 import com.cedrus.TicketingService.model.Spot;
 import com.cedrus.TicketingService.model.Ticket;
-import com.cedrus.TicketingService.repository.SpotRepository;
 import com.cedrus.TicketingService.repository.TicketRepository;
 import com.cedrus.TicketingService.request.CreateTicketRequest;
 import com.cedrus.TicketingService.response.*;
 import com.netflix.discovery.EurekaClient;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -19,7 +20,8 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static com.cedrus.TicketingService.utils.JsonUtils.jsonToObject;
-import static com.cedrus.TicketingService.utils.TicketingServiceUtils.*;
+import static com.cedrus.TicketingService.utils.TicketingServiceUtils.generateUUiD;
+import static com.cedrus.TicketingService.utils.TicketingServiceUtils.getApi;
 
 @Service
 public class TicketService {
@@ -46,8 +48,11 @@ public class TicketService {
     private String statisticsServiceGetPriceUrl;
 
 
-    public CreatedTicketResponse createTicket(CreateTicketRequest createTicketRequest){
+    public CreatedTicketResponse createTicket(CreateTicketRequest createTicketRequest) {
         Spot availableSpot = spotService.bookSpot(createTicketRequest.getVehicleType());
+        if (availableSpot == null) {
+            throw new NoDataFoundException();
+        }
         Ticket ticket = new Ticket(generateUUiD(), availableSpot, LocalDateTime.now(), null, null);
         Ticket createdTicket = ticketRepository.save(ticket);
 
@@ -55,17 +60,23 @@ public class TicketService {
                 availableSpot.getFloor().getFloorNumber()), createdTicket.getEntranceTimestamp());
     }
 
-    public PayedTicketResponse payTicket(String ticketId){
+    public PayedTicketResponse payTicket(String ticketId) {
         Optional<Ticket> ticket = ticketRepository.findById(ticketId);
-        if(ticket.isEmpty()){
+        if (ticket.isEmpty()) {
             throw new NoDataFoundException();
         }
         Ticket ticketToUpdate = ticket.get();
-        if(ticketToUpdate.getExitTimestamp() != null || ticketToUpdate.getCost() != null){
+        if (ticketToUpdate.getExitTimestamp() != null || ticketToUpdate.getCost() != null) {
             throw new TicketAlreadyUsedException();
         }
-        String responseEntity = getApi(restTemplate(),statisticsServiceName,discoveryClient,ticketId,statisticsServiceGetPriceUrl);
+        String responseEntity = getApi(restTemplate(), statisticsServiceName, discoveryClient, ticketId, statisticsServiceGetPriceUrl);
+        if (responseEntity == null) {
+            throw new CalculateCostException();
+        }
         Response response = jsonToObject(responseEntity, Response.class);
+        if (StringUtils.isEmpty(response.getData().toString())) {
+            throw new CalculateCostException();
+        }
         TicketPriceResponse ticketPriceResponse = jsonToObject(response.getData().toString(), TicketPriceResponse.class);
 
         ticketToUpdate.setExitTimestamp(LocalDateTime.now());

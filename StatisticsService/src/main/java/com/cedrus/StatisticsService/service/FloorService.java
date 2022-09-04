@@ -15,7 +15,7 @@ public class FloorService {
     @Autowired
     FloorRepository floorRepository;
 
-    public List<Floor> getAllFloors(){
+    public List<Floor> getAllFloors() {
         return toList(floorRepository.findAll());
     }
 }

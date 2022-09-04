@@ -10,7 +10,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
-import java.util.UUID;
 
 @Entity
 @Table(name = "floor")
@@ -29,6 +28,6 @@ public class Floor implements Serializable {
     @Column(name = "floor_number")
     private int floorNumber;
 
-    @Column(name ="maximum_spots")
+    @Column(name = "maximum_spots")
     private int maximumSpots;
 }

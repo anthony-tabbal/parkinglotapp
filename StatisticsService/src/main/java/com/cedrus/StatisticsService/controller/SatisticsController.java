@@ -26,18 +26,18 @@ public class SatisticsController {
     SpotService spotService;
 
     @GetMapping(value = "/ticket-price/{ticketId}")
-    public Response<TicketPriceResponse> getTicketPrice(@PathVariable String ticketId){
+    public Response<TicketPriceResponse> getTicketPrice(@PathVariable String ticketId) {
         return new Response<TicketPriceResponse>("200", "success", ticketService.getTicketPrice(ticketId));
     }
 
     @GetMapping(value = "/floor/available-spots-number")
-    public Response<AvailableSpotsResponse> getAvailableSpotsByFloor(@RequestParam String floorId){
+    public Response<AvailableSpotsResponse> getAvailableSpotsByFloor(@RequestParam String floorId) {
         return new Response<AvailableSpotsResponse>("200", "success", spotService.getAvailableSpotsByFloor(floorId));
     }
 
     @GetMapping(value = "/ticket-sold/income")
     public Response<TicketSoldAndIncomeResponse> getTicketSoldPerFloorAndTotalIncome(@RequestParam(value = ON_DATE, required = false)
-                                                                                         @DateTimeFormat(pattern = DATE_FORMAT) LocalDate onDate){
+                                                                                     @DateTimeFormat(pattern = DATE_FORMAT) LocalDate onDate) {
         return new Response<TicketSoldAndIncomeResponse>("200", "success", ticketService.getTicketSoldPerFloorAndTotalIncome(onDate));
     }
 }

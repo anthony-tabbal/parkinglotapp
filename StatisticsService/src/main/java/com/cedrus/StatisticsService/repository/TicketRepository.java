@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDate;
 
 @Repository
-public interface TicketRepository extends CrudRepository<Ticket,String> {
+public interface TicketRepository extends CrudRepository<Ticket, String> {
 
     @Query(nativeQuery = true, value = "Select t.ticket_id, t.spot_id, t.entrance_timestamp, t.exit_timestamp, t.cost " +
             "from ticket t left join spot s on s.spot_id = t.spot_id " +

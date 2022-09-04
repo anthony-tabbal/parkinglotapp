@@ -14,9 +14,9 @@ public class SpotService {
     @Autowired
     SpotRepository spotRepository;
 
-    public Spot bookSpot(String vehicleType){
+    public Spot bookSpot(String vehicleType) {
         Optional<Spot> spot = spotRepository.findFirstBySpotTypeAndIsAvailable(vehicleType, true);
-        if(spot.isEmpty()){
+        if (spot.isEmpty()) {
             throw new NoDataFoundException();
         }
         Spot availableSpot = spot.get();
