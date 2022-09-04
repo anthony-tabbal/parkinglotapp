@@ -1,0 +1,67 @@
+version: '3.1'
+services:
+  ParkingLotApp:
+    image: 'parking-lot-app-docker'
+    ports:
+      - "8761:8761"
+    depends_on:
+      PostgreSQL:
+        condition: service_healthy
+    environment:
+      spring.datasource.url: jdbc:postgresql://PostgreSQL:5432/parkinglot
+      spring.datasource.driver-class-name: org.postgresql.Driver
+      spring.datasource.username: atabbal
+      spring.datasource.password: 123456
+    healthcheck:
+      test: "curl --fail --silent localhost:8761/actuator/health | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  TicketingService:
+    image: 'ticketing-service-docker'
+    ports:
+      - "8088:8088"
+    depends_on:
+      PostgreSQL:
+        condition: service_healthy
+      ParkingLotApp:
+        condition: service_healthy
+    environment:
+      eureka.client.service-url.defaultZone : http://ParkingLotApp:8761/eureka
+      spring.datasource.url: jdbc:postgresql://PostgreSQL:5432/parkinglot
+      spring.datasource.driver-class-name: org.postgresql.Driver
+      spring.datasource.username: atabbal
+      spring.datasource.password: 123456
+
+  StatisticsService:
+    image: 'statistics-service-docker'
+    ports:
+      - "8089:8089"
+    depends_on:
+      PostgreSQL:
+        condition: service_healthy
+      ParkingLotApp:
+        condition: service_healthy
+    environment:
+      eureka.client.service-url.defaultZone : http://ParkingLotApp:8761/eureka
+      spring.datasource.url: jdbc:postgresql://PostgreSQL:5432/parkinglot
+      spring.datasource.driver-class-name: org.postgresql.Driver
+      spring.datasource.username: atabbal
+      spring.datasource.password: 123456
+
+  PostgreSQL:
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=123456
+      - POSTGRES_USER=atabbal
+      - POSTGRES_DB=parkinglot
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+        - ./init.sql:/docker-entrypoint-initdb.d/init.sql

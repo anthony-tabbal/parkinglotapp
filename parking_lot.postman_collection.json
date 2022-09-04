@@ -1,0 +1,195 @@
+{
+	"info": {
+		"_postman_id": "99e5957c-11c9-4500-adf4-7f619da2bc36",
+		"name": "Parking Lot",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19747703"
+	},
+	"item": [
+		{
+			"name": "Ticketing Service",
+			"item": [
+				{
+					"name": "createTicket",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"vehicleType\" : \"Compact\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8088/api/ticketing/create-ticket",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8088",
+							"path": [
+								"api",
+								"ticketing",
+								"create-ticket"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "closeTicket",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8088/api/ticketing/pay-ticket/6e2ee614-1713-4840-b42c-e995c623a4da",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8088",
+							"path": [
+								"api",
+								"ticketing",
+								"pay-ticket",
+								"6e2ee614-1713-4840-b42c-e995c623a4da"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Statistics Service",
+			"item": [
+				{
+					"name": "getTicketPrice",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8089/api/statistics/ticket-price/3d7f30c1-a593-43d7-be44-96546da341f0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8089",
+							"path": [
+								"api",
+								"statistics",
+								"ticket-price",
+								"3d7f30c1-a593-43d7-be44-96546da341f0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAvailableSpotsByFloor",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"carType\" : \"truck\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8089/api/statistics/floor/available-spots-number?floorId=bf5b5f2e-702e-45e2-bad0-84607828cb1f",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8089",
+							"path": [
+								"api",
+								"statistics",
+								"floor",
+								"available-spots-number"
+							],
+							"query": [
+								{
+									"key": "floorId",
+									"value": "bf5b5f2e-702e-45e2-bad0-84607828cb1f"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getTicketSoldPerFloorAndTotalIncome",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8089/api/statistics/ticket-sold/income?onDate=2022-09-03",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8089",
+							"path": [
+								"api",
+								"statistics",
+								"ticket-sold",
+								"income"
+							],
+							"query": [
+								{
+									"key": "onDate",
+									"value": "2022-09-03"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
