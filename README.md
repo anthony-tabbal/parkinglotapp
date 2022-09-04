@@ -29,7 +29,7 @@ You will be able to start your http requests to the services.
 In each of the 3 Sprint Boot application, there is target folder that contains the .jar file
 
 ###### Step 1:
-open a new terminal session on each application target directory, and run the following command: "java -jar <jarfilename>.jar"
+open a new terminal session on each application target directory, and run the following command: "java -jar jarfilename.jar"
 
 ###### Step 2:
 After that each application has executed successfully, you will be able to start your http requests to the services.
