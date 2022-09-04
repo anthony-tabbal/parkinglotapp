@@ -33,3 +33,12 @@ open a new terminal session on each application target directory, and run the fo
 
 ###### Step 2:
 After that each application has executed successfully, you will be able to start your http requests to the services.
+
+
+### N.B:
+to check swagger documentation:
+##### Ticketing Service:
+http://localhost:8088/swagger-ui/index.html
+
+##### Statistics Service:
+http://localhost:8089/swagger-ui/index.html
