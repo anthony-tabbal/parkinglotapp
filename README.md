@@ -4,7 +4,7 @@ Parking Lot Microservice Application
 ### How to run application using Docker:
 
 ###### Step 1:
-open a new terminal session in the directory of each Springboot app (ParkingLot, StatisticsService, TicketingService) and run the following command in each one:
+open a new terminal session in the directory of each Springboot app (ParkingLot, StatisticsService, TicketingService) but while packaging Ticketing and Statistics Services, ParkingLotApp should be running. Run the following command in each session for packaging:
 - " mvn package "
 
 build a docker image for these 3 spring boot applications by using the following commands on the directory of each app:
