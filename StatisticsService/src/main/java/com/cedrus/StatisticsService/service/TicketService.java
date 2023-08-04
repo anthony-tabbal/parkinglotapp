@@ -47,9 +47,9 @@ public class TicketService {
             if(initHour <= 1){
                 price = price.add(new BigDecimal(4));
             }else if (initHour <= 3){
-                price = price.add(new BigDecimal(3.5));
+                price = price.add(new BigDecimal("3.5"));
             }else {
-                price = price.add(new BigDecimal(2.5));
+                price = price.add(new BigDecimal("2.5"));
             }
             initHour++;
         }

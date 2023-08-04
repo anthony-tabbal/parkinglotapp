@@ -19,6 +19,7 @@ import static com.cedrus.StatisticsService.constant.StatisticsServiceConstants.O
 @RequestMapping(value = "/api/statistics")
 public class SatisticsController {
 
+
     @Autowired
     TicketService ticketService;
 

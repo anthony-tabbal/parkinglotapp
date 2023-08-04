@@ -12,6 +12,7 @@ import com.netflix.discovery.EurekaClient;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -36,6 +37,7 @@ public class TicketService {
     @Autowired
     private EurekaClient discoveryClient;
 
+    @LoadBalanced
     @Bean
     RestTemplate restTemplate() {
         return new RestTemplate();
